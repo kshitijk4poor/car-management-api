@@ -1,1 +1,10 @@
-fastapi[all]
+fastapi
+uvicorn
+motor
+python-jose
+python-multipart
+bcrypt
+python-dotenv
+pydantic
+pyjwt
+aiofiles
