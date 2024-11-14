@@ -1,7 +1,7 @@
 services:
   # A Docker web service
   - type: web
-    name: fastapi-example
+    name: car-management-api
     runtime: python
     plan: free
     autoDeploy: false
