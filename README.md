@@ -1,27 +1,68 @@
-# Deploy FastAPI on Render
+# 🚗 Car Management API
 
-Use this repo as a template to deploy a Python [FastAPI](https://fastapi.tiangolo.com) service on Render.
+A robust FastAPI service for managing car listings with image uploads, user authentication, and search capabilities.
 
-See https://render.com/docs/deploy-fastapi or follow the steps below:
+## 🌟 Features
 
-## Manual Steps
+- 🔐 JWT Authentication
+- 📝 CRUD operations for car listings
+- 🖼️ Multiple image uploads (up to 10 per listing)
+- 🔍 Search functionality
+- ☁️ Cloudinary integration for image storage
+- 🗄️ MongoDB database
 
-1. You may use this repository directly or [create your own repository from this template](https://github.com/render-examples/fastapi/generate) if you'd like to customize the code.
-2. Create a new Web Service on Render.
-3. Specify the URL to your new repository or this repository.
-4. Render will automatically detect that you are deploying a Python service and use `pip` to download the dependencies.
-5. Specify the following as the Start Command.
-
-    ```shell
-    uvicorn main:app --host 0.0.0.0 --port $PORT
-    ```
-
-6. Click Create Web Service.
-
-Or simply click:
+## 🚀 Quick Deploy
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/render-examples/fastapi)
 
-## Thanks
+## 🛠️ Manual Deployment Steps
 
-Thanks to [Harish](https://harishgarg.com) for the [inspiration to create a FastAPI quickstart for Render](https://twitter.com/harishkgarg/status/1435084018677010434) and for some sample code!
+1. Clone this repository or use it as a template
+2. Create a new Web Service on Render
+3. Connect your repository
+4. Add your environment variables:
+   - `MONGODB_URL`
+   - `JWT_SECRET_KEY`
+   - `CLOUDINARY_URL`
+5. Use this start command:
+```
+uvicorn main:app --host 0.0.0.0 --port $PORT
+```
+
+## 📚 API Documentation
+
+Once deployed, access the interactive API documentation at:
+- Swagger UI: `/docs`
+- ReDoc: `/redoc`
+
+These endpoints provide detailed API specifications and allow you to test endpoints directly.
+
+Access the interactive API documentation at:
+- Swagger UI: [https://car-management-api-cw20.onrender.com/docs](https://car-management-api-cw20.onrender.com/docs)
+- ReDoc: [https://car-management-api-cw20.onrender.com/redoc](https://car-management-api-cw20.onrender.com/redoc)
+
+
+## 🔧 Local Development
+
+1. Create a virtual environment:
+```
+python -m venv venv
+source venv/bin/activate
+```
+
+2. Install dependencies:
+```
+pip install -r requirements.txt
+```
+
+3. Create `.env` file with required environment variables
+4. Run the server:
+```
+uvicorn main:app --reload
+```
+
+## 📝 Environment Variables
+
+- `MONGO_URL`: MongoDB URI
+- `JWT_SECRET_KEY`: Secret key for JWT
+- `CLOUDINARY_URL`: Cloudinary URL
