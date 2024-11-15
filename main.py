@@ -103,7 +103,12 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = jwt.encode(
-        {"sub": str(user["_id"]), "exp": datetime.utcnow() + access_token_expires},
+        {
+            "sub": str(user["_id"]),
+            "email": user["email"],
+            "name": user["name"],
+            "exp": datetime.utcnow() + access_token_expires
+        },
         SECRET_KEY,
         algorithm=ALGORITHM,
     )
