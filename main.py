@@ -14,8 +14,15 @@ import json
 import uuid
 from fastapi.staticfiles import StaticFiles
 import aiofiles
+import logging
+from fastapi import Request
+from cloudinary.uploader import upload
+from cloudinary.utils import cloudinary_url
+import cloudinary
 
 load_dotenv()
+
+cloudinary.config(url=os.getenv('CLOUDINARY_URL'))
 
 app = FastAPI()
 
@@ -141,18 +148,9 @@ async def create_car(
     uploaded_images = []
     if imageFiles:
         for file in imageFiles:
-            # Generate unique filename
-            ext = file.filename.split('.')[-1]
-            filename = f"{uuid.uuid4()}.{ext}"
-            file_path = os.path.join(UPLOAD_DIR, filename)
-            
-            # Save file
-            async with aiofiles.open(file_path, 'wb') as buffer:
-                content = await file.read()
-                await buffer.write(content)
-            
-            # Store the URL path
-            uploaded_images.append(f"/uploads/{filename}")
+            content = await file.read()
+            result = upload(content)
+            uploaded_images.append(result['secure_url'])
     
     # Combine URLs
     all_images = url_images + uploaded_images
@@ -207,3 +205,12 @@ async def delete_car(car_id: str, current_user: User = Depends(get_current_user)
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Car not found")
     return {"message": "Car deleted successfully"}
+
+logging.basicConfig(level=logging.INFO)
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    logging.info(f"Incoming request: {request.method} {request.url}")
+    response = await call_next(request)
+    logging.info(f"Response status: {response.status_code}")
+    return response
